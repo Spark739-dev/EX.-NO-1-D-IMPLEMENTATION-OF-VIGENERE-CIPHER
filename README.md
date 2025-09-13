@@ -21,8 +21,49 @@
   STEP-8: Repeat the above steps to generate the entire cipher text.
   
 ## PROGRAM:
+        #include <stdio.h>
+        #include <string.h>
+        #include <ctype.h>
+        
+        
+        void encryptVigenere(char text[], char key[], char result[]) {
+            int textLen = strlen(text);
+            int keyLen = strlen(key);
+            int i, j = 0;
+        
+            for (i = 0; i < textLen; i++) {
+                char c = text[i];
+        
+                if (isalpha(c)) {
+                    char base = isupper(c) ? 'A' : 'a';
+                    char keyBase = isupper(key[j % keyLen]) ? 'A' : 'a';
+        
+                    result[i] = ((c - base) + (key[j % keyLen] - keyBase)) % 26 + base;
+                    j++; 
+                } else {
+                    result[i] = c; 
+                }
+            }
+            result[textLen] = '\0';
+        }
+        
+        int main() {
+            char plaintext[100], key[100], encrypted[100];
+        
+            fgets(plaintext, sizeof(plaintext), stdin);
+            plaintext[strcspn(plaintext, "\n")] = '\0'; 
+            printf("Enter plaintext: %s\n",plaintext);
+            fgets(key, sizeof(key), stdin);
+            key[strcspn(key, "\n")] = '\0';
+            printf("Enter key:%s",key);
+            encryptVigenere(plaintext, key, encrypted);
+            printf("\nEncrypted Text: %s\n", encrypted);
+        
+            return 0;
+        }
 
 ## OUTPUT:
+<img width="620" height="284" alt="image" src="https://github.com/user-attachments/assets/a296a1de-b0c1-42fc-ad6f-ab13b053d1f5" />
 
 ## RESULT:
   Thus the Vigenere Cipher substitution technique had been implemented successfully.
